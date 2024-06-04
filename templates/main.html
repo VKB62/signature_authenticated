@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Проверить подпись
+{% endblock %}
+{% block body %}
+<div class="container full-height">
+    <div class="row full-height justify-content-center align-items-center">
+        <div class="col-md-6">
+            <form method="post" enctype="multipart/form-data" class="d-flex flex-column align-items-center">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success mt-3">Проверить</button>
+                {% if result %}
+                    <br>
+                    <div>Это подпись пользователя {{result.name}} c вероятностью {{result.proc}}%</div>
+                    <br>
+                    {% if result.proc > 70 %}
+                        <div>Пользователь аутентифицирован.</div>
+                    {% else %}
+                        <div>Пользователь не аутентифицирован.</div>
+                    {% endif %}
+                {% endif %}
+            </form>
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}
